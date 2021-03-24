@@ -14,7 +14,7 @@ function App() {
       </nav>
       <div className="content">
         <PageContent>
-          <React.Suspense fallback={<em>Loading...</em>}>
+          <React.Suspense fallback={<em>Loading&hellip;</em>}>
             <Router>
               <Routes path="*" />
             </Router>
