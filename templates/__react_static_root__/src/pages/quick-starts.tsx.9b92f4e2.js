@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{54:function(e,t,a){"use strict";a.r(t);var n=a(0),r=a.n(n);t.default=function(){return r.a.createElement("div",null,r.a.createElement("p",null,r.a.createElement("a",{href:"/quick-start-files/quick-start-1.mp4",target:"_blank"},"Quick Start 1")))}}}]);
