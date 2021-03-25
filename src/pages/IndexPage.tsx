@@ -3,6 +3,7 @@ import React from "react";
 import H1 from "../components/H1";
 import H2 from "../components/H2";
 import QuickStartList from "../components/QuickStartList";
+import TutorialList from "../components/TutorialList";
 
 export default function IndexPage() {
   return (
@@ -22,14 +23,7 @@ export default function IndexPage() {
         Articles that guide you step-by-step through the process of creating
         real-world smart contracts using the Neo Blockchain Toolkit:
       </p>
-      <ul>
-        <li style={{ listStyleType: "none", marginBottom: 10 }}>
-          <a href="tutorial1.html">Tutorial: NEP17 Token</a>
-        </li>
-        <li style={{ listStyleType: "none", marginBottom: 10 }}>
-          <a href="tutorial2.html">Tutorial: Domain Registrar</a>
-        </li>
-      </ul>
+      <TutorialList />
     </>
   );
 }

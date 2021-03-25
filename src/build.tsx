@@ -9,6 +9,8 @@ import IndexPage from "./pages/IndexPage";
 import QuickStartPage from "./pages/QuickStartPage";
 import { quickStarts } from "./data/quickStarts";
 import PageTemplate from "./components/PageTemplate";
+import { tutorials } from "./data/tutorials";
+import TutorialPage from "./pages/TutorialPage";
 
 const distPath = path.join(__dirname, "..", "dist");
 const staticPath = path.join(distPath, "static");
@@ -33,6 +35,14 @@ for (const quickStart of quickStarts) {
     `quickstart${quickStart.number}.html`,
     `Quick Start ${quickStart.number}: ${quickStart.title}`,
     <QuickStartPage quickStart={quickStart} />
+  );
+}
+
+for (const tutorial of tutorials) {
+  buildPage(
+    `tutorial${tutorial.number}.html`,
+    `Tutorial: ${tutorial.title}`,
+    <TutorialPage tutorial={tutorial} />
   );
 }
 
