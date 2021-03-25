@@ -49,7 +49,7 @@ export default function PageTemplate({ children, title }: Props) {
           style={{
             marginLeft: "auto",
             marginRight: "auto",
-            maxWidth: 1024,
+            maxWidth: 1280,
             paddingLeft: 10,
             paddingRight: 10,
           }}

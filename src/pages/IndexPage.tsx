@@ -2,6 +2,7 @@ import React from "react";
 
 import H1 from "../components/H1";
 import H2 from "../components/H2";
+import QuickStartList from "../components/QuickStartList";
 
 export default function IndexPage() {
   return (
@@ -14,18 +15,7 @@ export default function IndexPage() {
         &mdash;designed to walk you through getting started using the Neo
         Blockchain Toolkit:
       </p>
-      <ol>
-        <li style={{ listStyleType: "none", marginBottom: 10 }}>
-          <a href="quickstart1.html">
-            Quick Start 1: Set up your development environment
-          </a>
-        </li>
-        <li style={{ listStyleType: "none", marginBottom: 10 }}>
-          <a href="quickstart2.html">
-            Quick Start 2: Create a private Neo blockchain
-          </a>
-        </li>
-      </ol>
+      <QuickStartList />
 
       <H2>Tutorials</H2>
       <p>
