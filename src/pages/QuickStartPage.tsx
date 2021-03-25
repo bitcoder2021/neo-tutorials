@@ -1,15 +1,11 @@
 import React from "react";
 
-import HelloWorld from "../components/HelloWorld";
+import H1 from "../components/H1";
 
 type Props = {
   number: number;
 };
 
 export default function QuickStartPage({ number }: Props) {
-  return (
-    <>
-      <HelloWorld who={`Quick Start ${number}`} />
-    </>
-  );
+  return <H1>Quick Start {number}</H1>;
 }
