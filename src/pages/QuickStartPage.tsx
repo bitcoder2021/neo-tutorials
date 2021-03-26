@@ -18,7 +18,7 @@ export default function QuickStartPage({ quickStart }: Props) {
         {quickStart.title}
       </H1>
       <div>
-        <video autoPlay controls style={{ width: "100%" }}>
+        <video controls style={{ width: "100%" }}>
           <source src={videoHref} type="video/mp4" />
           Your browser does not support playing inline videos;
           <a href={videoHref}>click here to download the video file</a>.
