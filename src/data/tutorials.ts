@@ -1,4 +1,3 @@
-import nep17 from "./tutorials/nep17";
 import registrar from "./tutorials/registrar";
 
 type Tutorial = {
@@ -7,6 +6,6 @@ type Tutorial = {
   content: { onlyRelevantFor?: "ui" | "cmd"; segment: JSX.Element }[];
 };
 
-const tutorials: Tutorial[] = [registrar, nep17];
+const tutorials: Tutorial[] = [registrar /*, nep17*/];
 
 export { tutorials, Tutorial };
