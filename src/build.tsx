@@ -40,9 +40,14 @@ for (const quickStart of quickStarts) {
 
 for (const tutorial of tutorials) {
   buildPage(
-    `tutorial${tutorial.number}.html`,
+    `tutorial${tutorial.number}-ui.html`,
     `Tutorial: ${tutorial.title}`,
-    <TutorialPage tutorial={tutorial} />
+    <TutorialPage tutorial={tutorial} mode="ui" />
+  );
+  buildPage(
+    `tutorial${tutorial.number}-cmd.html`,
+    `Tutorial: ${tutorial.title}`,
+    <TutorialPage tutorial={tutorial} mode="cmd" />
   );
 }
 

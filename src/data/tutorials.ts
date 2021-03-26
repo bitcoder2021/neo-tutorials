@@ -1,11 +1,12 @@
+import nep17 from "./tutorials/nep17";
+import registrar from "./tutorials/registrar";
+
 type Tutorial = {
   number: number;
   title: string;
+  content: { onlyRelevantFor?: "ui" | "cmd"; segment: JSX.Element }[];
 };
 
-const tutorials: Tutorial[] = [
-  { number: 1, title: "NEP17 Token" },
-  { number: 2, title: "Domain Registrar" },
-];
+const tutorials: Tutorial[] = [registrar, nep17];
 
 export { tutorials, Tutorial };
