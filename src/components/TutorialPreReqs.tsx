@@ -18,7 +18,7 @@ export default function TutorialPreReqs({ mode }: Props) {
           <strong>.NET SDK 5.0</strong>
           <br />
           We’ll write the smart contract code using the C# programming language.
-          The .NET Core SDK is required to compile the C# code.
+          The .NET SDK is required to compile the C# code.
           <br />
           <a href="https://dotnet.microsoft.com/download">
             https://dotnet.microsoft.com/download
