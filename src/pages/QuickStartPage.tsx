@@ -7,10 +7,12 @@ import QuickStartList from "../components/QuickStartList";
 import TutorialList from "../components/TutorialList";
 
 type Props = {
+  next?: QuickStart;
+  previous?: QuickStart;
   quickStart: QuickStart;
 };
 
-export default function QuickStartPage({ quickStart }: Props) {
+export default function QuickStartPage({ quickStart, next, previous }: Props) {
   const videoHref = `./static/quick-start-files/quick-start-${quickStart.number}.mp4`;
   return (
     <>
@@ -25,6 +27,42 @@ export default function QuickStartPage({ quickStart }: Props) {
           <a href={videoHref}>click here to download the video file</a>.
         </video>
       </div>
+      {(!!next || !!previous) && (
+        <div
+          style={{
+            alignItems: "flex-start",
+            display: "flex",
+            justifyContent: "space-between",
+            marginLeft: 20,
+            marginRight: 20,
+          }}
+        >
+          {!!previous && (
+            <div style={{ flexGrow: 1 }}>
+              Previous video
+              <br />
+              <a
+                href={`./quickstart${previous.number}.html`}
+                style={{ fontWeight: "bold" }}
+              >
+                {previous.title}
+              </a>
+            </div>
+          )}
+          {!!next && (
+            <div style={{ flexGrow: 1, textAlign: "right" }}>
+              Next video
+              <br />
+              <a
+                href={`./quickstart${next.number}.html`}
+                style={{ fontWeight: "bold" }}
+              >
+                {next.title}
+              </a>
+            </div>
+          )}
+        </div>
+      )}
       {!!quickStart.notes?.length && (
         <>
           <H2>Notes:</H2>

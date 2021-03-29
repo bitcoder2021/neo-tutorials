@@ -30,11 +30,14 @@ function buildPage(filename: string, title: string, page: JSX.Element) {
 
 buildPage("index.html", "N3 Tutorials", <IndexPage />);
 
-for (const quickStart of quickStarts) {
+for (let i = 0; i < quickStarts.length; i++) {
+  const next = quickStarts[i + 1] || undefined;
+  const previous = quickStarts[i - 1] || undefined;
+  const quickStart = quickStarts[i];
   buildPage(
     `quickstart${quickStart.number}.html`,
     `Quick Start ${quickStart.number}: ${quickStart.title}`,
-    <QuickStartPage quickStart={quickStart} />
+    <QuickStartPage next={next} previous={previous} quickStart={quickStart} />
   );
 }
 
