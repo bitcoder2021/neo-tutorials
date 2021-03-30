@@ -2,10 +2,11 @@ import React from "react";
 
 type Props = {
   children: any;
+  headerImage?: boolean;
   title: string;
 };
 
-export default function PageTemplate({ children, title }: Props) {
+export default function PageTemplate({ children, headerImage, title }: Props) {
   return (
     <html lang="en">
       <head>
@@ -24,7 +25,7 @@ export default function PageTemplate({ children, title }: Props) {
         }}
       >
         <div
-          style={{ backgroundColor: "#101010", marginBottom: 25, padding: 10 }}
+          style={{ backgroundColor: "#101010", padding: 10, paddingLeft: 30 }}
         >
           <a
             href="https://ngdenterprise.com/"
@@ -42,16 +43,20 @@ export default function PageTemplate({ children, title }: Props) {
               fontWeight: "bold",
             }}
           >
-            N3 Tutorials Microsite
+            N3 Tutorials
           </a>
         </div>
+        {!!headerImage && (
+          <img src="./static/n3.jpg" style={{ width: "100%" }} />
+        )}
         <div
           style={{
             marginLeft: "auto",
             marginRight: "auto",
+            marginTop: 25,
             maxWidth: 1280,
-            paddingLeft: 10,
-            paddingRight: 10,
+            paddingLeft: 30,
+            paddingRight: 30,
           }}
         >
           {children}

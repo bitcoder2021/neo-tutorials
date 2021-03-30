@@ -12,20 +12,24 @@ export default function IndexPage() {
 
       <H2>Quick Start Videos</H2>
       <p>
-        A series of videos&mdash;<em>each less than 10 minutes</em>
+        A series of videos&mdash;<em>approximately 10 minutes each</em>
         &mdash;designed to walk you through getting started using the Neo
-        Blockchain Toolkit:
+        Blockchain Toolkit to develop N3 smart contracts:
       </p>
       <QuickStartList />
 
       <H2>Tutorials</H2>
       <p>
         Articles that guide you step-by-step through the process of creating
-        real-world smart contracts using the Neo Blockchain Toolkit:
+        real-world N3 smart contracts using the Neo Blockchain Toolkit:
       </p>
       <TutorialList />
 
-      <p style={{ textAlign: "center", marginTop: 75 }}>
+      <div style={{ marginBottom: 25, marginTop: 100, textAlign: "center" }}>
+        <img src="./static/neo.svg" style={{ width: 100 }} />
+      </div>
+
+      <p style={{ textAlign: "center" }}>
         <small>
           Got questions, comments or suggestions regarding the content of this
           tutorial site?

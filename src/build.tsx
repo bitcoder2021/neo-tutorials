@@ -19,16 +19,23 @@ try {
   fs.mkdirSync(staticPath);
 } catch (e) {}
 
-function buildPage(filename: string, title: string, page: JSX.Element) {
+function buildPage(
+  filename: string,
+  title: string,
+  page: JSX.Element,
+  headerImage?: boolean
+) {
   const html =
     "<!doctype html>\r\n" +
     reactDomServer.renderToStaticMarkup(
-      <PageTemplate title={title}>{page}</PageTemplate>
+      <PageTemplate headerImage={headerImage} title={title}>
+        {page}
+      </PageTemplate>
     );
   fs.writeFileSync(path.join(distPath, filename), html);
 }
 
-buildPage("index.html", "N3 Tutorials", <IndexPage />);
+buildPage("index.html", "N3 Tutorials", <IndexPage />, true);
 
 for (let i = 0; i < quickStarts.length; i++) {
   const next = quickStarts[i + 1] || undefined;
@@ -45,12 +52,14 @@ for (const tutorial of tutorials) {
   buildPage(
     `tutorial${tutorial.number}-ui.html`,
     `Tutorial: ${tutorial.title}`,
-    <TutorialPage tutorial={tutorial} mode="ui" />
+    <TutorialPage tutorial={tutorial} mode="ui" />,
+    true
   );
   buildPage(
     `tutorial${tutorial.number}-cmd.html`,
     `Tutorial: ${tutorial.title}`,
-    <TutorialPage tutorial={tutorial} mode="cmd" />
+    <TutorialPage tutorial={tutorial} mode="cmd" />,
+    true
   );
 }
 
