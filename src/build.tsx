@@ -51,13 +51,13 @@ for (let i = 0; i < quickStarts.length; i++) {
 for (const tutorial of tutorials) {
   buildPage(
     `tutorial${tutorial.number}-ui.html`,
-    `Tutorial: ${tutorial.title}`,
+    tutorial.title,
     <TutorialPage tutorial={tutorial} mode="ui" />,
     true
   );
   buildPage(
     `tutorial${tutorial.number}-cmd.html`,
-    `Tutorial: ${tutorial.title}`,
+    tutorial.title,
     <TutorialPage tutorial={tutorial} mode="cmd" />,
     true
   );

@@ -7,7 +7,7 @@ export default function TutorialList() {
     <ul>
       {tutorials.map((_) => (
         <li key={_.number} style={{ listStyleType: "none", marginBottom: 15 }}>
-          <a href={`tutorial${_.number}-ui.html`}>Tutorial: {_.title}</a>
+          <a href={`tutorial${_.number}-ui.html`}>{_.title}</a>
         </li>
       ))}
     </ul>

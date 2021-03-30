@@ -12,11 +12,7 @@ type Props = {
 export default function TutorialPage({ tutorial, mode }: Props) {
   return (
     <>
-      <H1>
-        Tutorial:
-        <br />
-        {tutorial.title}
-      </H1>
+      <H1>{tutorial.title}</H1>
       {mode === "ui" && (
         <p>
           You are currently viewing the UI version of this tutorial. More
