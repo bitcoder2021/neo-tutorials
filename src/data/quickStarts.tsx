@@ -9,7 +9,7 @@ type QuickStart = {
 const quickStarts: QuickStart[] = [
   {
     number: 1,
-    title: "Gettint Started with the Neo Blockchain Toolkit",
+    title: "Getting Started with the Neo Blockchain Toolkit",
     notes: [
       <p>
         The .NET SDK can be downloaded from:
