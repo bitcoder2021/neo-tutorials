@@ -35,7 +35,7 @@ const quickStarts: QuickStart[] = [
       </p>,
     ],
   },
-  { number: 2, title: "Create a private Neo blockchain" },
+  { number: 2, title: "Create a private N3 blockchain" },
   { number: 3, title: "Creating wallets and transferring assets" },
   {
     number: 4,
