@@ -17,5 +17,5 @@ pre {
   color: rgb(0, 229, 153);
   font-family: monospace;
   padding: 10px;
-  border-radius: 10px 0 0 0;
+  border-radius: 0 10px 0 0;
 }
