@@ -9,7 +9,7 @@ type QuickStart = {
 const quickStarts: QuickStart[] = [
   {
     number: 1,
-    title: "Set up your development environment",
+    title: "Getting Started with the Neo Blockchain Toolkit",
     notes: [
       <p>
         The .NET SDK can be downloaded from:
@@ -35,11 +35,11 @@ const quickStarts: QuickStart[] = [
       </p>,
     ],
   },
-  { number: 2, title: "Create a private N3 blockchain" },
-  { number: 3, title: "Create wallets and transfer assets" },
+  { number: 2, title: "Working with the Private Net" },
+  { number: 3, title: "Working with Wallets and Assets" },
   {
     number: 4,
-    title: "Create and deploy a smart contract",
+    title: "Building your first Smart Contract",
     notes: [
       <p>
         This is the URL to the official C# extension for Visual Studio Code:
@@ -56,7 +56,7 @@ const quickStarts: QuickStart[] = [
   },
   {
     number: 5,
-    title: "Debug your smart contract",
+    title: "Debugging your Smart Contract",
     notes: [
       <p>
         The launch.json schema for debugging Neo Smart Contracts is documented
