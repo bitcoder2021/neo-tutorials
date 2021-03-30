@@ -6,7 +6,7 @@ import TutorialPreReqs from "../../components/TutorialPreReqs";
 
 const _: Tutorial = {
   number: 2,
-  title: "Real-world Tokens: Building and deploying an NEP-17 Token",
+  title: "Real-world Tokens: Building and deploying a NEP-17 Token",
   content: [
     {
       segment: (
