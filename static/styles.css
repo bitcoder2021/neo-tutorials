@@ -16,6 +16,6 @@ pre {
   background-color: #242424;
   color: rgb(0, 229, 153);
   font-family: monospace;
-  padding: 10px;
-  border-radius: 0 0 10px 0;
+  padding: 10px 10px 10px 30px;
+  border-right: 3px solid rgb(0, 229, 153);
 }
