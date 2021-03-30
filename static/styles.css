@@ -15,11 +15,10 @@ code {
 }
 
 pre {
-  margin-left: 20px;
-  margin-right: 20px;
-  background-color: #1c1c1c;
+  margin-left: 25px;
+  margin-right: 25px;
+  background-color: #242424;
   color: rgb(0, 229, 153);
   font-family: monospace;
-  padding: 15px;
-  border-left: 10px solid #242424;
+  padding: 14px;
 }
