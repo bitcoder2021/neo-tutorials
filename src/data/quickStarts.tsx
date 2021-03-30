@@ -36,7 +36,7 @@ const quickStarts: QuickStart[] = [
     ],
   },
   { number: 2, title: "Create a private N3 blockchain" },
-  { number: 3, title: "Creating wallets and transferring assets" },
+  { number: 3, title: "Create wallets and transfer assets" },
   {
     number: 4,
     title: "Create and deploy a smart contract",
@@ -56,7 +56,7 @@ const quickStarts: QuickStart[] = [
   },
   {
     number: 5,
-    title: "Debugging smart contracts",
+    title: "Debug your smart contract",
     notes: [
       <p>
         The launch.json schema for debugging Neo Smart Contracts is documented
