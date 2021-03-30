@@ -4,16 +4,16 @@ This repo contains the source code for the [Neo N3 Tutorials Microsite](https://
 
 ## QuickStarts
 
-QS1 - Getting Started with the Toolkit
-QS2 - Working with the Private Net
-QS3 - Working with Wallets and Assets
-QS4 - Building your first Smart Contract
-QS5 - Debugging your Smart Contract
+1. Getting Started with the Toolkit
+2. Working with the Private Net
+3. Working with Wallets and Assets
+4. Building your first Smart Contract
+5. Debugging your Smart Contract
 
 ## Tutorials
 
-T1 - Real-world Tokens: Building and deploying a NEP-17 Token
-T2 - Real-world Smart Contracts: Building and deploying a Simple Domain Registrar 
+1. Real-world Tokens: Building and deploying a NEP-17 Token
+2. Real-world Smart Contracts: Building and deploying a Simple Domain Registrar 
 
 ## Deployment
 
