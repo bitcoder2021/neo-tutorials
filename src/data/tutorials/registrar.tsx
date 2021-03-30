@@ -82,7 +82,7 @@ const _: Tutorial = {
             $ neoxp create
             <br />
             Created 1 node privatenet at
-            /Users/neo/xyz-token/default.neo-express
+            /Users/neo/registrar/default.neo-express
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;Note: The private keys for the accounts in
             this file are are *not* encrypted.
@@ -484,8 +484,8 @@ const _: Tutorial = {
         <>
           <p>
             The <code>RegistrationContract.csproj</code> file is an MS Build C#
-            project configuration file; it tells the .NET Core SDK tooling how
-            to build your project.
+            project configuration file; it tells the .NET SDK tooling how to
+            build your project.
           </p>
           <p>
             The <code>tasks.json</code> file is a Visual Studio Code
@@ -524,7 +524,7 @@ const _: Tutorial = {
             &nbsp;&nbsp;All projects are up-to-date for restore.
             <br />
             &nbsp;&nbsp;RegistrationContract -&gt;
-            /Users/david/temp/registrar/Registration/bin/Debug/net5.0/RegistrationContract.dll
+            /Users/neo/registrar/Registration/bin/Debug/net5.0/RegistrationContract.dll
             <br />
             <br />
             Build succeeded.
@@ -552,8 +552,8 @@ const _: Tutorial = {
             the <code>SmartContract</code> class (from the{" "}
             <code>Neo.SmartContract.Framework</code> package) to signify that it
             is a smart contract. The class has various attributes that are used
-            to provide metadata that will be deployed to the Neo blockchain
-            along with the contract:
+            to provide metadata that will be deployed to the N3 blockchain along
+            with the contract:
           </p>
           <code>
             [DisplayName("YourName.RegistrationContract")]
@@ -597,8 +597,7 @@ namespace Registration
     public class RegistrationContract : SmartContract
     {
     }
-}
-`}</pre>
+}`}</pre>
           </code>
           <p>
             You can rebuild your contract now to verify that it still builds.
