@@ -16,7 +16,8 @@ code {
 
 pre {
   margin-left: 20px;
-  background-color: #101010;
+  margin-right: 20px;
+  background-color: #151515;
   color: rgb(0, 229, 153);
   font-family: monospace;
   padding: 15px;
