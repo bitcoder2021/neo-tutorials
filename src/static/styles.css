@@ -6,3 +6,19 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+code {
+  background-color: #eee;
+  font-family: monospace;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+pre {
+  margin-left: 25px;
+  margin-right: 25px;
+  background-color: #242424;
+  color: rgb(0, 229, 153);
+  font-family: monospace;
+  padding: 14px;
+}

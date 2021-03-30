@@ -491,7 +491,7 @@ const _: Tutorial = {
             The <code>tasks.json</code> file is a Visual Studio Code
             configuration file that will allow you to build your code within
             Visual Studio Code. VS Code will have already built the sample code
-            and the various files produced by the build are in the
+            and the various files produced by the build are in the{" "}
             <code>Registration/bin/debug/net5.0</code> folder. You can rebuild
             your contract after making changes by choosing the “Run build task…”
             option in the “Terminal” menu in VS Code.
@@ -509,6 +509,22 @@ const _: Tutorial = {
             <code>dotnet build</code> command within the{" "}
             <code>Registration</code> folder whenever you want to build:
           </p>
+          <pre>
+            {`$ cd Registration/
+$ dotnet build
+Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  RegistrationContract -> /Users/neo/registrar/RegistrationContract/bin/Debug/net5.0/RegistrationContract.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.21`}
+          </pre>
           <code>
             $ cd Registration/
             <br />
@@ -555,15 +571,10 @@ const _: Tutorial = {
             to provide metadata that will be deployed to the N3 blockchain along
             with the contract:
           </p>
-          <code>
-            [DisplayName("YourName.RegistrationContract")]
-            <br />
-            [ManifestExtra("Author", "Your name")]
-            <br />
-            [ManifestExtra("Email", "your@address.invalid")]
-            <br />
-            [ManifestExtra("Description", "Describe your contract...")]
-          </code>
+          <pre>{`[DisplayName("YourName.RegistrationContract")]
+[ManifestExtra("Author", "Your name")]
+[ManifestExtra("Email", "your@address.invalid")]
+[ManifestExtra("Description", "Describe your contract...")]`}</pre>
           <p>Let’s replace these with real values…</p>
           <p>
             The <code>DisplayName</code> will be used to refer to your contract
@@ -579,8 +590,7 @@ const _: Tutorial = {
             constant and the <code>ChangeNumber</code> and{" "}
             <code>GetNumber</code> methods from the example contract:
           </p>
-          <code>
-            <pre>{`using System;
+          <pre>{`using System;
 using System.ComponentModel;
 using System.Numerics;
 
@@ -598,7 +608,6 @@ namespace Registration
     {
     }
 }`}</pre>
-          </code>
           <p>
             You can rebuild your contract now to verify that it still builds.
             Our contract doesn’t do anything useful yet, though; next we’ll code
@@ -651,8 +660,7 @@ namespace Registration
             determine if an arbitrary string is a valid domain name according to
             our rules and throw an exception if not:
           </p>
-          <code>
-            <pre>{`static void Validate(string domain)
+          <pre>{`static void Validate(string domain)
 {
     var domainBytes = domain.ToByteArray();
     for (int i = 0; i < domain.Length; i++)
@@ -669,7 +677,6 @@ namespace Registration
     }
 }
 `}</pre>
-          </code>
           <p>
             We’ll often need to know the current owner of a valid domain name,
             so let’s also add a helper method for that. We’ll use contract
@@ -677,8 +684,7 @@ namespace Registration
             will arrange for the method to return zero if a domain is
             unregistered.
           </p>
-          <code>
-            <pre>{`static Neo.UInt160 GetOwner(string domain)
+          <pre>{`static Neo.UInt160 GetOwner(string domain)
 {
     var value = Storage.Get(Storage.CurrentContext, domain);
     if (value == null)
@@ -690,29 +696,24 @@ namespace Registration
         return (Neo.UInt160) value;
     }
 }`}</pre>
-          </code>
           <p>
             We also need to declare the event that we will be emitting whenever
             domain name ownership changes:
           </p>
-          <code>
-            <pre>{`[DisplayName("ChangeOwner")]
+          <pre>{`[DisplayName("ChangeOwner")]
 public static event Action<string, Neo.UInt160> OnChangeOwner;
 `}</pre>
-          </code>
           <H2>Domain name lookup</H2>
           <p>
             Our first operation will allow people to lookup the current owner of
             a domain name (a return value of zero will represent that the domain
             is currently unregistered):
           </p>
-          <code>
-            <pre>{`public static Neo.UInt160 Lookup(string domain)
+          <pre>{`public static Neo.UInt160 Lookup(string domain)
 {
     Validate (domain);
     return GetOwner(domain);
 }`}</pre>
-          </code>
           <p>
             Note that we confirm the domain name is valid before doing any
             further processing; we will follow the same pattern for all of our
@@ -723,8 +724,7 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
             Next, we need an operation to allow someone to register an available
             domain name:
           </p>
-          <code>
-            <pre>{`public static void Register(string domain)
+          <pre>{`public static void Register(string domain)
 {
     Validate(domain);
 
@@ -737,7 +737,6 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
     Storage.Put(Storage.CurrentContext, domain, tx.Sender);
     OnChangeOwner(domain, tx.Sender);
 }`}</pre>
-          </code>
           <p>
             Note that we first check that the domain is valid and available. We
             then extract the address used to sign the transaction and update the
@@ -746,8 +745,7 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
           </p>
           <H2>Domain name transfer</H2>
           <p>Now we need an operation for transferring domain names:</p>
-          <code>
-            <pre>{`public static void Transfer(string domain, Neo.UInt160 to)
+          <pre>{`public static void Transfer(string domain, Neo.UInt160 to)
 {
     Validate(domain);
 
@@ -770,7 +768,6 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
     Storage.Put(Storage.CurrentContext, domain, to);
     OnChangeOwner(domain, to);
 }`}</pre>
-          </code>
           <p>
             We confirm that the domain is already registered, then we make sure
             that the destination address is valid and the signer of the
@@ -783,8 +780,7 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
             Finally, we need an operation for domain name owners to delete their
             registration:
           </p>
-          <code>
-            <pre>{`public static void Delete(string domain)
+          <pre>{`public static void Delete(string domain)
 {
     Validate(domain);
 
@@ -802,7 +798,6 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
     Storage.Delete(Storage.CurrentContext, domain);
     OnChangeOwner(domain, Neo.UInt160.Zero);
 }`}</pre>
-          </code>
           <p>
             We check that the domain is currently registered and the person it
             is registered to has signed the transaction; we then remove the
@@ -908,15 +903,13 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
       segment: (
         <>
           <p>Create a new text file and paste the following JSON into it:</p>
-          <code>
-            <pre>{`[
+          <pre>{`[
   {
     "contract": "djnicholson.RegistrationContract",
     "operation": "register",
     "args": [ "widgets" ]
   }
 ]`}</pre>
-          </code>
           <p>
             Save the file as <code>alice-registration.neo-invoke.json</code> and
             then run the following command:
@@ -1038,15 +1031,13 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
             <code>alice-to-bob-transfer.neo-invoke.json</code> and populate it
             as follows:
           </p>
-          <code>
-            <pre>{`[
+          <pre>{`[
   {
     "contract": "djnicholson.RegistrationContract",
     "operation": "transfer",
     "args": [ "widgets", "@bob" ]
   }
 ]`}</pre>
-          </code>
         </>
       ),
     },
@@ -1122,15 +1113,13 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
             <code>delete-widgets.neo-invoke.json</code> and populate it as
             follows:
           </p>
-          <code>
-            <pre>{`[
+          <pre>{`[
   {
     "contract": "djnicholson.RegistrationContract",
     "operation": "delete",
     "args": [ "widgets" ]
   }
 ]`}</pre>
-          </code>
           <p>
             Now run this invoke file the same was as before, but this time use
             Bob’s account to submit the transaction. Now nobody own’s the domain
@@ -1160,8 +1149,7 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
           </p>
           <H2>Source code listing</H2>
           <p>Here is the complete smart contract source code:</p>
-          <code>
-            <pre>{`using System;
+          <pre>{`using System;
 using System.ComponentModel;
 using Neo.SmartContract.Framework;
 using Neo.SmartContract.Framework.Services.Neo;
@@ -1272,7 +1260,6 @@ namespace Registration
         }
     }
 }`}</pre>
-          </code>
         </>
       ),
     },

@@ -444,9 +444,9 @@ const _: Tutorial = {
             The <code>tasks.json</code> file is a Visual Studio Code
             configuration file that will allow you to build your code within
             Visual Studio Code. VS Code will have already built the sample code
-            and the various files produced by the build are in the
-            <code>Registration/bin/debug/net5.0</code> folder. You can rebuild
-            your contract after making changes by choosing the “Run build task…”
+            and the various files produced by the build are in the{" "}
+            <code>XyzToken/bin/debug/net5.0</code> folder. You can rebuild your
+            contract after making changes by choosing the “Run build task…”
             option in the “Terminal” menu in VS Code.
           </p>
         </>
@@ -462,33 +462,22 @@ const _: Tutorial = {
             <code>dotnet build</code> command within the <code>XyzToken</code>{" "}
             folder whenever you want to build:
           </p>
-          <code>
-            $ cd XyzToken/
-            <br />
-            $ dotnet build
-            <br />
-            Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET
-            <br />
-            Copyright (C) Microsoft Corporation. All rights reserved.
-            <br />
-            <br />
-            &nbsp;&nbsp;Determining projects to restore...
-            <br />
-            &nbsp;&nbsp;All projects are up-to-date for restore.
-            <br />
-            &nbsp;&nbsp;XyzToken -&gt;
-            /Users/neo/xyz-token/XyzToken/bin/Debug/net5.0/XyzToken.dll
-            <br />
-            <br />
-            Build succeeded.
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;0 Warning(s)
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;0 Error(s)
-            <br />
-            <br />
-            Time Elapsed 00:00:01.27
-          </code>
+          <pre>
+            {`$ cd XyzToken/
+$ dotnet build
+Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  XyzToken -> /Users/neo/xyz-token/XyzToken/bin/Debug/net5.0/XyzToken.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.27`}
+          </pre>
         </>
       ),
     },
@@ -508,15 +497,10 @@ const _: Tutorial = {
             to provide metadata that will be deployed to the N3 blockchain along
             with the contract:
           </p>
-          <code>
-            [DisplayName("YourName.XyzTokenContract")]
-            <br />
-            [ManifestExtra("Author", "Your name")]
-            <br />
-            [ManifestExtra("Email", "your@address.invalid")]
-            <br />
-            [ManifestExtra("Description", "Describe your contract...")]
-          </code>
+          <pre>{`[DisplayName("YourName.XyzTokenContract")]
+[ManifestExtra("Author", "Your name")]
+[ManifestExtra("Email", "your@address.invalid")]
+[ManifestExtra("Description", "Describe your contract...")]`}</pre>
           <p>Let’s replace these with real values…</p>
           <p>
             The <code>DisplayName</code> will be used to refer to your contract
@@ -531,8 +515,7 @@ const _: Tutorial = {
             <code>OnNumberChanged</code> event and the <code>ChangeNumber</code>{" "}
             and <code>GetNumber</code> methods from the example contract:
           </p>
-          <code>
-            <pre>{`using System;
+          <pre>{`using System;
 using System.ComponentModel;
 using System.Numerics;
 
@@ -551,7 +534,6 @@ namespace XyzToken
       const string MAP_NAME = "XyzTokenContract";
     }
 }`}</pre>
-          </code>
           <p>
             You can rebuild your contract now to verify that it still builds.
             Our contract doesn’t do anything useful yet, though; next we’ll code
@@ -623,8 +605,7 @@ namespace XyzToken
             We’ll create a constant for the value 1,000,000 as we will also need
             to refer to the same value later when initializing our contract.
           </p>
-          <code>
-            <pre>{`using System;
+          <pre>{`using System;
 using System.ComponentModel;
 using System.Numerics;
 
@@ -647,15 +628,13 @@ namespace XyzToken
         public static BigInteger TotalSupply() => InitialSupply;
     }
 }`}</pre>
-          </code>
           <p>
             The implementation of Symbol (we’ll return “XYZ”) and Decimals
             (we’ll return 8) will be equally as simple. There’s no need to
             define constants here as we won’t be reusing the same values
             elsewhere; we can just use inline literals:
           </p>
-          <code>
-            <pre>{`using System;
+          <pre>{`using System;
 using System.ComponentModel;
 using System.Numerics;
 
@@ -682,7 +661,6 @@ namespace XyzToken
         public static ulong Decimals() => 8;
     }
 }`}</pre>
-          </code>
           <p>
             At this stage you should build your contract again to validate that
             you don’t have any syntax errors. However, our contract does not yet
@@ -701,12 +679,10 @@ namespace XyzToken
             <code>Transfer</code>
             event:
           </p>
-          <code>
-            <pre>
-              {`[DisplayName("Transfer")]
+          <pre>
+            {`[DisplayName("Transfer")]
 public static event Action<Neo.UInt160, Neo.UInt160, BigInteger> OnTransfer;`}
-            </pre>
-          </code>
+          </pre>
           <p>
             We’ll use our contract’s storage to keep track of the XYZ token
             balance for a specific address. This information can be encoded
@@ -720,11 +696,9 @@ public static event Action<Neo.UInt160, Neo.UInt160, BigInteger> OnTransfer;`}
             property that we can use anywhere we need a reference to our mapping
             of token balances:
           </p>
-          <code>
-            <pre>
-              {`private static StorageMap Balances => Storage.CurrentContext.CreateMap(MAP_NAME);`}
-            </pre>
-          </code>
+          <pre>
+            {`private static StorageMap Balances => Storage.CurrentContext.CreateMap(MAP_NAME);`}
+          </pre>
           <p>
             To make our later code a bit cleaner, let’s also add some strongly
             typed methods for getting values out of the map and putting values
@@ -734,18 +708,15 @@ public static event Action<Neo.UInt160, Neo.UInt160, BigInteger> OnTransfer;`}
             We’ll use the <code>BigInteger</code> type to represent token
             balances.
           </p>
-          <code>
-            <pre>
-              {`private static BigInteger Get(Neo.UInt160 key) => (BigInteger) Balances.Get(key);
+          <pre>
+            {`private static BigInteger Get(Neo.UInt160 key) => (BigInteger) Balances.Get(key);
 private static void Put(Neo.UInt160 key, BigInteger value) => Balances.Put(key, value);`}
-            </pre>
-          </code>
+          </pre>
           <p>
             Now let’s add some helper methods that will allow us to increase or
             reduce the XYZ token balance for a specific address:
           </p>
-          <code>
-            <pre>{`private static void Increase(Neo.UInt160 key, BigInteger value)
+          <pre>{`private static void Increase(Neo.UInt160 key, BigInteger value)
 {
     Put(key, Get(key) + value);
 }
@@ -762,7 +733,6 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
         Put(key, oldValue - value);
     }
 }`}</pre>
-          </code>
           <p>
             Note that the implementation of <code>Reduce</code> is slightly more
             complicated than <code>Increase</code>, this is because{" "}
@@ -814,8 +784,7 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
             the Neo Smart Contract Framework to test for this.
           </p>
           <p>The full implementation of our Transfer method is as follows:</p>
-          <code>
-            <pre>{`public static bool Transfer(Neo.UInt160 from, Neo.UInt160 to, BigInteger amount, object data)
+          <pre>{`public static bool Transfer(Neo.UInt160 from, Neo.UInt160 to, BigInteger amount, object data)
 {
     if (!from.IsValid || !to.IsValid)
     {
@@ -848,17 +817,14 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
     
     return true;
 }`}</pre>
-          </code>
           <p>
             The NEP-17 standard also requires that we provide a contract method
             to retrieve the token balance for an arbitrary address:
           </p>
-          <code>
-            <pre>{`public static BigInteger BalanceOf(Neo.UInt160 account)
+          <pre>{`public static BigInteger BalanceOf(Neo.UInt160 account)
 {
     return Get(account);
 }`}</pre>
-          </code>
           <p>
             At this stage you should build your contract again to validate that
             you don’t have any syntax errors. Our contract is now technically
@@ -888,8 +854,7 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
             <code>null</code> for the sender address).
           </p>
           <p>The code for the deploy method will look like this:</p>
-          <code>
-            <pre>{`static readonly Neo.UInt160 Owner = "NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u".ToScriptHash();
+          <pre>{`static readonly Neo.UInt160 Owner = "NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u".ToScriptHash();
 
 [DisplayName("_deploy")]
 public static void Deploy(object data, bool update)
@@ -900,7 +865,6 @@ public static void Deploy(object data, bool update)
         OnTransfer(null, Owner, InitialSupply);
     }
 }`}</pre>
-          </code>
           <p>
             Be sure to use the actual address of your owner wallet from earlier
             (which will be different to the value shown in this code sample).
@@ -1059,15 +1023,13 @@ public static void Deploy(object data, bool update)
       segment: (
         <>
           <p>Create a new text file and paste the following JSON into it:</p>
-          <code>
-            <pre>{`[
+          <pre>{`[
   {
     "contract": "djnicholson.XyzTokenContract",
     "operation": "transfer",
     "args": [ "@owner", "@alice", 10, "none" ]
   }
 ]`}</pre>
-          </code>
           <p>
             Save the file as <code>owner-to-alice.neo-invoke.json</code> and
             then run the following command:
@@ -1203,8 +1165,7 @@ public static void Deploy(object data, bool update)
           </p>
           <H2>Source code listing</H2>
           <p>Here is the complete smart contract source code:</p>
-          <code>
-            <pre>{`using System;
+          <pre>{`using System;
 using System.ComponentModel;
 using System.Numerics;
 
@@ -1310,7 +1271,6 @@ namespace XyzToken
         }
     }
 }`}</pre>
-          </code>
         </>
       ),
     },

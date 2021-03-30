@@ -50,9 +50,7 @@ const quickStarts: QuickStart[] = [
       </p>,
       <p>
         The command to install the Neon complier is:{" "}
-        <code>
-          <pre>dotnet tool install -g neo.neon --version 3.0.0-rc1</pre>
-        </code>
+        <code>dotnet tool install -g neo.neon --version 3.0.0-rc1</code>
       </p>,
     ],
   },
