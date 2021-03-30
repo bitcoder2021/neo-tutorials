@@ -6,3 +6,14 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+code {
+  background-color: #eee;
+  font-family: monospace;
+}
+
+pre {
+  background-color: #242424;
+  color: rgb(0, 229, 153);
+  font-family: monospace;
+}
