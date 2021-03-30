@@ -24,6 +24,7 @@ export default function IndexPage() {
         real-world smart contracts using the Neo Blockchain Toolkit:
       </p>
       <TutorialList />
+
       <p style={{ textAlign: "center", marginTop: 75 }}>
         <small>
           Got questions, comments or suggestions regarding the content of this
