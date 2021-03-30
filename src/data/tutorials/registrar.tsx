@@ -6,7 +6,7 @@ import TutorialPreReqs from "../../components/TutorialPreReqs";
 
 const _: Tutorial = {
   number: 1,
-  title: "Domain Registrar",
+  title: "Real-world Smart Contracts: Building and deploying a Simple Domain Registrar",
   content: [
     {
       segment: (
