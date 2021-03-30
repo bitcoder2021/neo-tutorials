@@ -24,6 +24,18 @@ export default function IndexPage() {
         real-world smart contracts using the Neo Blockchain Toolkit:
       </p>
       <TutorialList />
+      <p style={{ textAlign: "center", marginTop: 75 }}>
+        <small>
+          Got questions, comments or suggestions regarding the content of this
+          tutorial site?
+          <br />
+          Please open a GitHub issue:{" "}
+          <a href="https://github.com/ngdenterprise/neo-tutorials">
+            https://github.com/ngdenterprise/neo-tutorials
+          </a>
+          .
+        </small>
+      </p>
     </>
   );
 }
