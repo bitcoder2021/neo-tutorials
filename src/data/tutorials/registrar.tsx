@@ -40,10 +40,10 @@ const _: Tutorial = {
     {
       onlyRelevantFor: "cmd",
       segment: (
-        <code>
-          $ mkdir registrar
-          <br />$ cd registrar
-        </code>
+        <pre>
+          {`$ mkdir registrar
+$ cd registrar`}
+        </pre>
       ),
     },
     {
@@ -78,19 +78,13 @@ const _: Tutorial = {
       onlyRelevantFor: "cmd",
       segment: (
         <>
-          <code>
-            $ neoxp create
-            <br />
-            Created 1 node privatenet at
-            /Users/neo/registrar/default.neo-express
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;Note: The private keys for the accounts in
-            this file are are *not* encrypted.
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do not
-            use these accounts on MainNet or in any other system where security
-            is a concern.
-          </code>
+          <pre>
+            {`$ neoxp create
+Created 1 node privatenet at
+/Users/neo/registrar/default.neo-express
+    Note: The private keys for the accounts in this file are are *not* encrypted.
+          Do not use these accounts on MainNet or in any other system where security is a concern.`}
+          </pre>
           <p>
             Take note of the security warning, a{" "}
             <code>default.neo-express</code> file will have been created that
@@ -98,7 +92,7 @@ const _: Tutorial = {
             testing as they are not securely stored.
           </p>
           <p>You can now run your private blockchain:</p>
-          <code>$ neoxp run</code>
+          <pre>$ neoxp run</pre>
           <p>
             In your terminal you’ll see the console output from Neo Express and
             will notice that about once every 15 seconds a new block is added to
@@ -203,20 +197,13 @@ const _: Tutorial = {
     {
       onlyRelevantFor: "cmd",
       segment: (
-        <code>
-          $ neoxp wallet create owner
-          <br />
-          owner
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;NigW5fvwHWMEzgoeasQTA6fdktXLe8tCsa
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;Note: The private keys for the accounts in
-          this wallet are *not* encrypted.
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do not use
-          these accounts on MainNet or in any other system where security is a
-          concern.
-        </code>
+        <pre>
+          {`$ neoxp wallet create owner
+owner
+    NigW5fvwHWMEzgoeasQTA6fdktXLe8tCsa
+    Note: The private keys for the accounts in this wallet are *not* encrypted.
+          Do not use these accounts on MainNet or in any other system where security is a concern.`}
+        </pre>
       ),
     },
     {
@@ -260,13 +247,10 @@ const _: Tutorial = {
     {
       onlyRelevantFor: "cmd",
       segment: (
-        <code>
-          $ neoxp transfer GAS 100000 genesis owner
-          <br />
-          Transfer Transaction
-          0x0acc8cab2dd88a3e4c73284a71edc94c77a03db62e46950ee6d42b60e22a9b9d
-          submitted
-        </code>
+        <pre>
+          {`$ neoxp transfer GAS 100000 genesis owner
+Transfer Transaction 0x0acc8cab2dd88a3e4c73284a71edc94c77a03db62e46950ee6d42b60e22a9b9d submitted`}
+        </pre>
       ),
     },
     {
@@ -525,33 +509,6 @@ Build succeeded.
 
 Time Elapsed 00:00:01.21`}
           </pre>
-          <code>
-            $ cd Registration/
-            <br />
-            $ dotnet build
-            <br />
-            Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET
-            <br />
-            Copyright (C) Microsoft Corporation. All rights reserved.
-            <br />
-            <br />
-            &nbsp;&nbsp;Determining projects to restore...
-            <br />
-            &nbsp;&nbsp;All projects are up-to-date for restore.
-            <br />
-            &nbsp;&nbsp;RegistrationContract -&gt;
-            /Users/neo/registrar/Registration/bin/Debug/net5.0/RegistrationContract.dll
-            <br />
-            <br />
-            Build succeeded.
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;0 Warning(s)
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;0 Error(s)
-            <br />
-            <br />
-            Time Elapsed 00:00:01.18
-          </code>
         </>
       ),
     },
@@ -823,14 +780,10 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
             Machine bytecode for your contract and is required for deployment.
             You can deploy your contract to your private blockchain as follows:
           </p>
-          <code>
-            $ neoxp contract deploy
-            Registration/bin/Debug/net5.0/RegistrationContract.nef owner
-            <br />
-            Deployment Transaction
-            0xc5f6b16350427e4bf0dfa01fc939ac192df45e39e703e60cd08db5c1a37e17a5
-            submitted
-          </code>
+          <pre>
+            {`$ neoxp contract deploy Registration/bin/Debug/net5.0/RegistrationContract.nef owner
+Deployment Transaction 0xc5f6b16350427e4bf0dfa01fc939ac192df45e39e703e60cd08db5c1a37e17a5 submitted`}
+          </pre>
         </>
       ),
     },
@@ -914,13 +867,10 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
             Save the file as <code>alice-registration.neo-invoke.json</code> and
             then run the following command:
           </p>
-          <code>
-            $ neoxp contract invoke alice-registration.neo-invoke.json alice
-            <br />
-            Invocation Transaction
-            0xdbf3fa71a74fa0676d7513ded2e2f18ea6cf5b9f022a9b008b9b05bc36865217
-            submitted
-          </code>
+          <pre>
+            {`$ neoxp contract invoke alice-registration.json owner
+Invocation Transaction 0xdbf3fa71a74fa0676d7513ded2e2f18ea6cf5b9f022a9b008b9b05bc36865217 submitted`}
+          </pre>
           <p>
             This command submits a transaction to your private blockchain that
             invokes all of the steps in the invoke file (only one step in our

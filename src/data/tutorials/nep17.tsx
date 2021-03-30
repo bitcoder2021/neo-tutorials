@@ -45,10 +45,10 @@ const _: Tutorial = {
     {
       onlyRelevantFor: "cmd",
       segment: (
-        <code>
-          $ mkdir xyz-token
-          <br />$ cd xyz-token
-        </code>
+        <pre>
+          {`$ mkdir xyz-token
+$ cd xyz-token`}
+        </pre>
       ),
     },
     {
@@ -83,19 +83,13 @@ const _: Tutorial = {
       onlyRelevantFor: "cmd",
       segment: (
         <>
-          <code>
-            $ neoxp create
-            <br />
-            Created 1 node privatenet at
-            /Users/neo/xyz-token/default.neo-express
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;Note: The private keys for the accounts in
-            this file are are *not* encrypted.
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do not
-            use these accounts on MainNet or in any other system where security
-            is a concern.
-          </code>
+          <pre>
+            {`$ neoxp create
+Created 1 node privatenet at
+/Users/neo/xyz-token/default.neo-express
+    Note: The private keys for the accounts in this file are are *not* encrypted.
+          Do not use these accounts on MainNet or in any other system where security is a concern.`}
+          </pre>
           <p>
             Take note of the security warning, a{" "}
             <code>default.neo-express</code> file will have been created that
@@ -103,7 +97,7 @@ const _: Tutorial = {
             testing as they are not securely stored.
           </p>
           <p>You can now run your private blockchain:</p>
-          <code>$ neoxp run</code>
+          <pre>$ neoxp run</pre>
           <p>
             In your terminal you’ll see the console output from Neo Express and
             will notice that about once every 15 seconds a new block is added to
@@ -206,20 +200,13 @@ const _: Tutorial = {
     {
       onlyRelevantFor: "cmd",
       segment: (
-        <code>
-          $ neoxp wallet create owner
-          <br />
-          owner
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;Note: The private keys for the accounts in
-          this wallet are *not* encrypted.
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do not use
-          these accounts on MainNet or in any other system where security is a
-          concern.
-        </code>
+        <pre>
+          {`$ neoxp wallet create owner
+owner
+    NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u
+    Note: The private keys for the accounts in this wallet are *not* encrypted.
+          Do not use these accounts on MainNet or in any other system where security is a concern.`}
+        </pre>
       ),
     },
     {
@@ -246,9 +233,10 @@ const _: Tutorial = {
       segment: (
         <>
           <p>
-            Take note of the owner address—NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u in
-            this example, but yours will be different—as we will use it later in
-            our smart contract code.
+            Take note of the owner address—
+            <code>NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u</code> in this example, but
+            yours will be different—as we will use it later in our smart
+            contract code.
           </p>
           <p>
             We now have a wallet for the smart contract owner, but that wallet
@@ -268,13 +256,10 @@ const _: Tutorial = {
     {
       onlyRelevantFor: "cmd",
       segment: (
-        <code>
-          $ neoxp transfer GAS 100000 genesis owner
-          <br />
-          Transfer Transaction
-          0x9a636b76b0e4a251dbd6211fd0a354d0b02c4b27d022aecbb985c4f8eec65f82
-          submitted
-        </code>
+        <pre>
+          {`$ neoxp transfer GAS 100000 genesis owner
+Transfer Transaction 0x9a636b76b0e4a251dbd6211fd0a354d0b02c4b27d022aecbb985c4f8eec65f82 submitted`}
+        </pre>
       ),
     },
     {
@@ -888,13 +873,10 @@ public static void Deploy(object data, bool update)
             bytecode for your contract and is required for deployment. You can
             deploy your contract to your private blockchain as follows:
           </p>
-          <code>
-            $ neoxp contract deploy XyzToken/bin/Debug/net5.0/XyzToken.nef owner
-            <br />
-            Deployment Transaction
-            0x84eb7ece9e7690a33e43a664affb4915f4031a322319c7d937f2dfa6c1017403
-            submitted
-          </code>
+          <pre>
+            {`$ neoxp contract deploy XyzToken/bin/Debug/net5.0/XyzToken.nef owner
+Deployment Transaction 0x84eb7ece9e7690a33e43a664affb4915f4031a322319c7d937f2dfa6c1017403 submitted`}
+          </pre>
         </>
       ),
     },
@@ -962,20 +944,13 @@ public static void Deploy(object data, bool update)
     {
       onlyRelevantFor: "cmd",
       segment: (
-        <code>
-          $ neoxp wallet create alice
-          <br />
-          alice
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;NN4B7wxDBRq9uqjRVwPYYQKDyZSf5AtzVp
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;Note: The private keys for the accounts in
-          this wallet are *not* encrypted.
-          <br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Do not use
-          these accounts on MainNet or in any other system where security is a
-          concern.
-        </code>
+        <pre>
+          {`$ neoxp wallet create alice
+alice
+  NN4B7wxDBRq9uqjRVwPYYQKDyZSf5AtzVp
+  Note: The private keys for the accounts in this wallet are *not* encrypted.
+        Do not use these accounts on MainNet or in any other system where security is a concern.`}
+        </pre>
       ),
     },
     {
@@ -1034,13 +1009,10 @@ public static void Deploy(object data, bool update)
             Save the file as <code>owner-to-alice.neo-invoke.json</code> and
             then run the following command:
           </p>
-          <code>
-            $ neoxp contract invoke owner-to-alice.neo-invoke.json owner
-            <br />
-            Invocation Transaction
-            0xdbf3fa71a74fa0676d7513ded2e2f18ea6cf5b9f022a9b008b9b05bc36865217
-            submitted
-          </code>
+          <pre>
+            {`$ neoxp contract invoke owner-to-alice.neo-invoke.json owner
+Invocation Transaction 0xdbf3fa71a74fa0676d7513ded2e2f18ea6cf5b9f022a9b008b9b05bc36865217 submitted`}
+          </pre>
           <p>
             This command submits a transaction to your private blockchain that
             invokes all of the steps in the invoke file (only one step in our
