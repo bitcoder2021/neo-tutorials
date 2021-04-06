@@ -33,6 +33,19 @@ const quickStarts: QuickStart[] = [
           https://marketplace.visualstudio.com/items?itemName=ngd-seattle.neo-blockchain-toolkit
         </a>
       </p>,
+      <p>Platform specific errata:</p>,
+      <p style={{ marginLeft: 30 }}>
+        <em>MacOS:</em> Running Neo Express on MacOS requires installing rocksdb
+        via <a href="https://brew.sh/">Homebrew</a>:<br />
+        <code>$ brew install rocksdb</code>
+      </p>,
+      <p style={{ marginLeft: 30 }}>
+        <em>Linux:</em> Running Neo Express on Linux requires installing
+        libsnappy and libc6. For example, on systems using the apt package
+        manager:
+        <br />
+        <code>$ sudo apt install libsnappy-dev libc6-dev -y</code>
+      </p>,
     ],
   },
   { number: 2, title: "Working with the Private Net" },
