@@ -15,8 +15,18 @@ This repo contains the source code for the [Neo N3 Tutorials Microsite](https://
 1. Real-world Tokens: Building and deploying a NEP-17 Token
 2. Real-world Smart Contracts: Building and deploying a Simple Domain Registrar 
 
-## Deployment
+## Testing locally
+
+To view your changes locally, run:
+
+    npm run build
+    
+Then open `./dist/index.html` in a web browser.
+
+## Deployment to production
 
 To publish updates, run:
 
     npm run deploy
+    
+(This requires permission to push to the gh-pages branch of this repo.)
