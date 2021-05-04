@@ -78,7 +78,7 @@ export default function TutorialPreReqs({ mode }: Props) {
           code.
         </li>
         <li>
-          <strong>Neon smart contract compiler</strong> &mdash;{" "}
+          <strong>Neo C# smart contract compiler</strong> &mdash;{" "}
           <a href="https://github.com/neo-project/neo-devpack-dotnet">
             https://github.com/neo-project/neo-devpack-dotnet
           </a>
@@ -102,7 +102,7 @@ export default function TutorialPreReqs({ mode }: Props) {
       >
         <p>
           For a step-by-step walkthrough showing how to install the C# VS Code
-          extension and the Neon compiler, see:{" "}
+          extension and the Neo C# compiler, see:{" "}
           <a href="./quickstart4.html">Quick Start video 4</a>.
         </p>
         <p>

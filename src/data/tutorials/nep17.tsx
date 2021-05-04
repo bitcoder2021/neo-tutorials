@@ -660,7 +660,7 @@ namespace XyzToken
             we’ll call the event <code>OnTransfer</code>—as this is a common
             convention for events in C# code—and we’ll use a{" "}
             <code>DisplayName</code>
-            attribute so that the Neon compiler knows that this is the{" "}
+            attribute so that the Neo C# compiler knows that this is the{" "}
             <code>Transfer</code>
             event:
           </p>
