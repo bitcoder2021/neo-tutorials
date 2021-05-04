@@ -71,12 +71,15 @@ const quickStarts: QuickStart[] = [
       </p>,
       <p>Commands used in this video:</p>,
       <p style={{ marginLeft: 30 }}>
-        <em>Installing the Neon compiler:</em>
+        <em>Installing the Neo C# compiler:</em>
         <br />
-        <code>$ dotnet tool install -g neo.neon --version 3.0.0-rc1</code>
+        <code>
+          $ dotnet tool install -g neo.compiler.csharp --version 3.0.0-rc2
+        </code>
         <br />
-        (The --version parameter will no longer be required after the final N3
-        release.)
+        (Please note that the tool name has changed since the video was
+        recorded. ALso note that the --version parameter will no longer be
+        required after the final N3 release.)
       </p>,
     ],
   },
