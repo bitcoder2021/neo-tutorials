@@ -7,6 +7,10 @@ import TutorialPreReqs from "../../components/TutorialPreReqs";
 const _: Tutorial = {
   number: 2,
   title: "Real-world Tokens: Building and deploying a NEP-17 Token",
+  basedOn: {
+    name: "Neo N3 Domain Registrar Smart Contract Sample",
+    url: "https://github.com/ngdenterprise/neo-registrar-sample",
+  },
   content: [
     {
       segment: (

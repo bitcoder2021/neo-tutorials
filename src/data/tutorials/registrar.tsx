@@ -8,6 +8,10 @@ const _: Tutorial = {
   number: 1,
   title:
     "Real-world Smart Contracts: Building and deploying a Simple Domain Registrar",
+  basedOn: {
+    name: "Neo N3 Fungible Token Sample Contract",
+    url: "https://github.com/ngdenterprise/neo-fungible-token-sample",
+  },
   content: [
     {
       segment: (
