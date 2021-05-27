@@ -188,11 +188,11 @@ Created 1 node privatenet at
         <>
           <H2>Create a wallet</H2>
           <p>
-            Next, we’ll create a wallet to use with our private blockchain. This
-            wallet will be used to deploy our smart contract to the blockchain,
-            and we’ll write our smart contract code so that this wallet is the
-            recipient of the XYZ tokens minted when the contract is first
-            deployed.
+            Next, we’ll create a wallet to use with our private blockchain.
+            We'll use this wallet to deploy our smart contract to the
+            blockchain, and will write the smart contract code so that the XYZ
+            tokens minted when the contract is first deployed are transferred to
+            the wallet that performed the deployment.
           </p>
         </>
       ),
@@ -232,12 +232,6 @@ owner
     {
       segment: (
         <>
-          <p>
-            Take note of the owner address—
-            <code>NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u</code> in this example, but
-            yours will be different—as we will use it later in our smart
-            contract code.
-          </p>
           <p>
             We now have a wallet for the smart contract owner, but that wallet
             doesn’t contain any assets. Deploying a smart contract to a Neo
@@ -504,9 +498,10 @@ Time Elapsed 00:00:01.27`}
 using System.ComponentModel;
 using System.Numerics;
 
+using Neo;
 using Neo.SmartContract.Framework;
-using Neo.SmartContract.Framework.Services.Neo;
-using Neo.SmartContract.Framework.Services.System;
+using Neo.SmartContract.Framework.Native;
+using Neo.SmartContract.Framework.Services;
 
 namespace XyzToken
 {
@@ -666,47 +661,44 @@ namespace XyzToken
           </p>
           <pre>
             {`[DisplayName("Transfer")]
-public static event Action<Neo.UInt160, Neo.UInt160, BigInteger> OnTransfer;`}
+public static event Action<UInt160, UInt160, BigInteger> OnTransfer;`}
           </pre>
           <p>
             We’ll use our contract’s storage to keep track of the XYZ token
             balance for a specific address. This information can be encoded
             using a mapping from addresses to numerical values. In a Neo smart
-            contract you can use the{" "}
-            <code>Storage.CurrentContext.CreateMap(…)</code> method to create an
-            object of type <code>StorageMap</code> which will allow you to
-            lookup values by key (addresses in our case) and set a value for a
-            specific key. Any changes made to the storage map are persisted and
-            also apply to subsequent contract invocations. Let’s add a helper
-            property that we can use anywhere we need a reference to our mapping
-            of token balances:
+            contract you can use the <code>StorageMap</code> class to create an
+            object which will allow you to lookup values by key (addresses in
+            our case) and set a value for a specific key. Any changes made to
+            the storage map are persisted and also apply to subsequent contract
+            invocations. Let’s add a helper property that we can use anywhere we
+            need a reference to our mapping of token balances:
           </p>
           <pre>
-            {`private static StorageMap Balances => Storage.CurrentContext.CreateMap(MAP_NAME);`}
+            {`private static StorageMap Balances => new StorageMap(Storage.CurrentContext, MAP_NAME);`}
           </pre>
           <p>
             To make our later code a bit cleaner, let’s also add some strongly
             typed methods for getting values out of the map and putting values
-            in. We’ll use the <code>Neo.UInt160</code> type to represent
-            addresses; this is a 160-but unsigned integer that can be safely
-            casted to a byte array of length 20 (the length of Neo addresses).
-            We’ll use the <code>BigInteger</code> type to represent token
-            balances.
+            in. We’ll use the <code>UInt160</code> type to represent addresses;
+            this is a 160-but unsigned integer that can be safely casted to a
+            byte array of length 20 (the length of Neo addresses). We’ll use the{" "}
+            <code>BigInteger</code> type to represent token balances.
           </p>
           <pre>
-            {`private static BigInteger Get(Neo.UInt160 key) => (BigInteger) Balances.Get(key);
-private static void Put(Neo.UInt160 key, BigInteger value) => Balances.Put(key, value);`}
+            {`private static BigInteger Get(UInt160 key) => (BigInteger) Balances.Get(key);
+private static void Put(UInt160 key, BigInteger value) => Balances.Put(key, value);`}
           </pre>
           <p>
             Now let’s add some helper methods that will allow us to increase or
             reduce the XYZ token balance for a specific address:
           </p>
-          <pre>{`private static void Increase(Neo.UInt160 key, BigInteger value)
+          <pre>{`private static void Increase(UInt160 key, BigInteger value)
 {
     Put(key, Get(key) + value);
 }
 
-private static void Reduce(Neo.UInt160 key, BigInteger value)
+private static void Reduce(UInt160 key, BigInteger value)
 {
     var oldValue = Get(key);
     if (oldValue == value)
@@ -745,8 +737,7 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
               <code>Runtime.CheckWitness(…)</code> helper method provided by the
               Neo Smart Contract Framework for this). However, this validation
               does not apply if the caller is a contract transferring its own
-              XYZ tokens (we can use the{" "}
-              <code>ExecutionEngine.CallingScriptHash</code>
+              XYZ tokens (we can use the <code>Runtime.CallingScriptHash</code>
               property to check for this).
             </li>
             <li>
@@ -769,7 +760,7 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
             the Neo Smart Contract Framework to test for this.
           </p>
           <p>The full implementation of our Transfer method is as follows:</p>
-          <pre>{`public static bool Transfer(Neo.UInt160 from, Neo.UInt160 to, BigInteger amount, object data)
+          <pre>{`public static bool Transfer(UInt160 from, UInt160 to, BigInteger amount, object data)
 {
     if (!from.IsValid || !to.IsValid)
     {
@@ -781,7 +772,7 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
         throw new Exception("The amount parameter must be greater than or equal to zero");
     }
 
-    if (!from.Equals(ExecutionEngine.CallingScriptHash) && !Runtime.CheckWitness(from))
+    if (!from.Equals(Runtime.CallingScriptHash) && !Runtime.CheckWitness(from))
     {
         throw new Exception("No authorization.");
     }
@@ -806,7 +797,7 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
             The NEP-17 standard also requires that we provide a contract method
             to retrieve the token balance for an arbitrary address:
           </p>
-          <pre>{`public static BigInteger BalanceOf(Neo.UInt160 account)
+          <pre>{`public static BigInteger BalanceOf(UInt160 account)
 {
     return Get(account);
 }`}</pre>
@@ -833,27 +824,23 @@ private static void Reduce(Neo.UInt160 key, BigInteger value)
             shouldn’t repeat the issuance if we update our contract).
           </p>
           <p>
-            We’ll issue all of the initial XYZ tokens to the owner wallet that
-            we created earlier. The NEP-17 standard requires that we fire the
-            transfer event for this initial allocation also (specifying{" "}
+            We’ll issue all of the initial XYZ tokens to whichever wallet
+            initially deploys the contract. The NEP-17 standard requires that we
+            fire the transfer event for this initial allocation also (specifying{" "}
             <code>null</code> for the sender address).
           </p>
           <p>The code for the deploy method will look like this:</p>
-          <pre>{`static readonly Neo.UInt160 Owner = "NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u".ToScriptHash();
-
-[DisplayName("_deploy")]
+          <pre>{`[DisplayName("_deploy")]
 public static void Deploy(object data, bool update)
 {
     if (!update)
     {
-        Increase(Owner, InitialSupply);
-        OnTransfer(null, Owner, InitialSupply);
+        var tx = (Transaction) Runtime.ScriptContainer;
+        var owner = (Neo.UInt160) tx.Sender;
+        Increase(owner, InitialSupply);
+        OnTransfer(null, owner, InitialSupply);
     }
 }`}</pre>
-          <p>
-            Be sure to use the actual address of your owner wallet from earlier
-            (which will be different to the value shown in this code sample).
-          </p>
           <p>
             At this stage you should build your contract again to validate that
             you don’t have any syntax errors. Our contract is now ready to be
@@ -1141,10 +1128,10 @@ Invocation Transaction 0xdbf3fa71a74fa0676d7513ded2e2f18ea6cf5b9f022a9b008b9b05b
 using System.ComponentModel;
 using System.Numerics;
 
-using Neo.SmartContract;
+using Neo;
 using Neo.SmartContract.Framework;
-using Neo.SmartContract.Framework.Services.Neo;
-using Neo.SmartContract.Framework.Services.System;
+using Neo.SmartContract.Framework.Native;
+using Neo.SmartContract.Framework.Services;
 
 namespace XyzToken
 {
@@ -1165,20 +1152,20 @@ namespace XyzToken
         public static ulong Decimals() => 8;
 
         [DisplayName("Transfer")]
-        public static event Action<Neo.UInt160, Neo.UInt160, BigInteger> OnTransfer;
+        public static event Action<UInt160, UInt160, BigInteger> OnTransfer;
 
-        private static StorageMap Balances => Storage.CurrentContext.CreateMap(MAP_NAME);
+        private static StorageMap Balances => new StorageMap(Storage.CurrentContext, MAP_NAME);
 
-        private static BigInteger Get(Neo.UInt160 key) => (BigInteger) Balances.Get(key);
+        private static BigInteger Get(UInt160 key) => (BigInteger) Balances.Get(key);
 
-        private static void Put(Neo.UInt160 key, BigInteger value) => Balances.Put(key, value);
+        private static void Put(UInt160 key, BigInteger value) => Balances.Put(key, value);
 
-        private static void Increase(Neo.UInt160 key, BigInteger value)
+        private static void Increase(UInt160 key, BigInteger value)
         {
             Put(key, Get(key) + value);
         }
 
-        private static void Reduce(Neo.UInt160 key, BigInteger value)
+        private static void Reduce(UInt160 key, BigInteger value)
         {
             var oldValue = Get(key);
             if (oldValue == value)
@@ -1191,7 +1178,7 @@ namespace XyzToken
             }
         }
 
-        public static bool Transfer(Neo.UInt160 from, Neo.UInt160 to, BigInteger amount, object data)
+        public static bool Transfer(UInt160 from, UInt160 to, BigInteger amount, object data)
         {
             if (!from.IsValid || !to.IsValid)
             {
@@ -1203,7 +1190,7 @@ namespace XyzToken
                 throw new Exception("The amount parameter must be greater than or equal to zero");
             }
 
-            if (!from.Equals(ExecutionEngine.CallingScriptHash) && !Runtime.CheckWitness(from))
+            if (!from.Equals(Runtime.CallingScriptHash) && !Runtime.CheckWitness(from))
             {
                 throw new Exception("No authorization.");
             }
@@ -1225,20 +1212,20 @@ namespace XyzToken
             return true;
         }
 
-        public static BigInteger BalanceOf(Neo.UInt160 account)
+        public static BigInteger BalanceOf(UInt160 account)
         {
             return Get(account);
         }
-
-        static readonly Neo.UInt160 Owner = "NgP2WUaoLPyjcKwzRoBXJB5zxuXt8jts6u".ToScriptHash();
 
         [DisplayName("_deploy")]
         public static void Deploy(object data, bool update)
         {
             if (!update)
             {
-                Increase(Owner, InitialSupply);
-                OnTransfer(null, Owner, InitialSupply);
+                var tx = (Transaction) Runtime.ScriptContainer;
+                var owner = (Neo.UInt160) tx.Sender;
+                Increase(owner, InitialSupply);
+                OnTransfer(null, owner, InitialSupply);
             }
         }
     }
