@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charSet="utf-8"/><title>Real-world Smart Contracts: Building and deploying a Simple Domain Registrar</title><meta name="description" content="Real-world Smart Contracts: Building and deploying a Simple Domain Registrar"/><link rel="stylesheet" href="static/styles.css"/></head><body style="background-color:#242424;color:#fff;font-family:Euclid Circular A,Avenir,Helvetica,Arial,&quot;sans-serif&quot;;margin:0;padding:0"><div style="background-color:#101010;padding:10px;padding-left:30px"><a href="https://ngdenterprise.com/" style="color:rgb(0,229,153);margin-right:5px">ngdenterprise</a> <a href="index.html" style="color:#fff;font-weight:bold">N3 Tutorials</a></div><img src="./static/n3.jpg" style="width:100%"/><div style="margin-left:auto;margin-right:auto;margin-top:25px;max-width:1280px;padding-left:30px;padding-right:30px"><h1 style="font-size:3rem;margin:50px;text-align:center">Real-world Smart Contracts: Building and deploying a Simple Domain Registrar</h1><p>You are currently viewing the command-line version of this tutorial. More comfortable using a graphical user-interface? <a href="./tutorial1-ui.html">Click here for a UI version of this tutorial</a>.</p><div style="background-color:#fff;color:#000;margin-top:20px;padding:15px"><p>This tutorial will walk you through the process of creating real-world Neo Smart Contract using the Neo Blockchain toolkit. We will build a blockchain-based domain registration system.</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Pre-requisites</h2><p>You will need the following software to follow along with this tutorial:</p><ul><li><strong>.NET SDK 5.0</strong> — <a href="https://dotnet.microsoft.com/download">https://dotnet.microsoft.com/download</a><br/>We’ll write the smart contract code using the C# programming language. The .NET SDK is required to compile the C# code.</li><li><strong>Visual Studio Code</strong> — <a href="https://code.visualstudio.com/download">https://code.visualstudio.com/download</a><br/>This is a very popular code editor; the Neo Blockchain Toolkit builds on top of VS Code.</li><li><strong>Neo Blockchain Toolkit Visual Studio Code extension</strong> — <a href="https://marketplace.visualstudio.com/items?itemName=ngd-seattle.neo-blockchain-toolkit">https://marketplace.visualstudio.com/items?itemName=ngd-seattle.neo-blockchain-toolkit</a><br/>This will add support to VS Code for visualizing Neo blockchains, running private blockchain instances and debugging Neo smart contracts.</li></ul><div style="margin-left:15%;margin-right:15%;border:1px solid #000;border-radius:15px;padding-left:15px;padding-right:15px;background-color:#f5f5f5;font-style:italic;font-size:0.8em"><p>For a step-by-step walkthrough showing how to install the above pre-requisites, see: <a href="./quickstart1.html">Quick Start video 1</a>.</p><p>This 6-minute video demonstrates how to setup a new machine for N3 smart contract development.</p></div><ul><li><strong>C# Visual Studio Code extension</strong> — <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp">https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp</a><br/>This will add support to VS Code for editing and building C# source code.</li><li><strong>Neo C# smart contract compiler</strong> — <a href="https://github.com/neo-project/neo-devpack-dotnet">https://github.com/neo-project/neo-devpack-dotnet</a><br/>This tool allows you to convert compiled C# code into bytecode suitable for execution by the Neo virtual machine.</li></ul><div style="margin-left:15%;margin-right:15%;border:1px solid #000;border-radius:15px;padding-left:15px;padding-right:15px;background-color:#f5f5f5;font-style:italic;font-size:0.8em"><p>For a step-by-step walkthrough showing how to install the C# VS Code extension and the Neo C# compiler, see: <a href="./quickstart4.html">Quick Start video 4</a>.</p><p>This 11-minute video demonstrates how to setup your machine to compile C# smart contracts and walks through a trivial example.</p></div><ul><li><strong>Neo Express</strong> — <a href="https://github.com/neo-project/neo-express">https://github.com/neo-project/neo-express</a><br/>This tool allows you to run a private instance of the Neo blockchain.</li></ul><div style="margin-left:15%;margin-right:15%;border:1px solid #000;border-radius:15px;padding-left:15px;padding-right:15px;background-color:#f5f5f5;font-style:italic;font-size:0.8em"><p>Neo Express can be installed using the following command:<br/><code>$ dotnet tool install Neo.Express -g</code></p><p> The .NET SDK must be installed first (see above).</p><p>On Linux and MacOS systems additional dependencies are required, see <a href="./quickstart1.html">Quick Start video 1</a> or the <a href="https://github.com/neo-project/neo-express#ubuntu-installation">Neo Express documentation</a> for more information.</p></div><p>All of the software listed above is freely available and cross-platform (you can follow along on Windows, Mac or Linux).</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Create a private blockchain</h2><p>First, we’ll create a new empty folder—registrar—for our project. We’ll store all files related to our domain registration service in this folder.</p><pre>$ mkdir registrar
+<html lang="en"><head><meta charSet="utf-8"/><title>Real-world Smart Contracts: Building and deploying a Simple Domain Registrar</title><meta name="description" content="Real-world Smart Contracts: Building and deploying a Simple Domain Registrar"/><link rel="stylesheet" href="static/styles.css"/></head><body style="background-color:#242424;color:#fff;font-family:Euclid Circular A,Avenir,Helvetica,Arial,&quot;sans-serif&quot;;margin:0;padding:0"><div style="background-color:#101010;padding:10px;padding-left:30px"><a href="https://ngdenterprise.com/" style="color:rgb(0,229,153);margin-right:5px">ngdenterprise</a> <a href="index.html" style="color:#fff;font-weight:bold">N3 Tutorials</a></div><img src="./static/n3.jpg" style="width:100%"/><div style="margin-left:auto;margin-right:auto;margin-top:25px;max-width:1280px;padding-left:30px;padding-right:30px"><h1 style="font-size:3rem;margin:50px;text-align:center">Real-world Smart Contracts: Building and deploying a Simple Domain Registrar</h1><p>You are currently viewing the command-line version of this tutorial. More comfortable using a graphical user-interface? <a href="./tutorial1-ui.html">Click here for a UI version of this tutorial</a>.</p><p>This tutorial was inspired by the <a href="https://github.com/ngdenterprise/neo-fungible-token-sample">Neo N3 Fungible Token Sample Contract</a> project.</p><div style="background-color:#fff;color:#000;margin-top:20px;padding:15px"><p>This tutorial will walk you through the process of creating real-world Neo Smart Contract using the Neo Blockchain toolkit. We will build a blockchain-based domain registration system.</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Pre-requisites</h2><p>You will need the following software to follow along with this tutorial:</p><ul><li><strong>.NET SDK 5.0</strong> — <a href="https://dotnet.microsoft.com/download">https://dotnet.microsoft.com/download</a><br/>We’ll write the smart contract code using the C# programming language. The .NET SDK is required to compile the C# code.</li><li><strong>Visual Studio Code</strong> — <a href="https://code.visualstudio.com/download">https://code.visualstudio.com/download</a><br/>This is a very popular code editor; the Neo Blockchain Toolkit builds on top of VS Code.</li><li><strong>Neo Blockchain Toolkit Visual Studio Code extension</strong> — <a href="https://marketplace.visualstudio.com/items?itemName=ngd-seattle.neo-blockchain-toolkit">https://marketplace.visualstudio.com/items?itemName=ngd-seattle.neo-blockchain-toolkit</a><br/>This will add support to VS Code for visualizing Neo blockchains, running private blockchain instances and debugging Neo smart contracts.</li></ul><div style="margin-left:15%;margin-right:15%;border:1px solid #000;border-radius:15px;padding-left:15px;padding-right:15px;background-color:#f5f5f5;font-style:italic;font-size:0.8em"><p>For a step-by-step walkthrough showing how to install the above pre-requisites, see: <a href="./quickstart1.html">Quick Start video 1</a>.</p><p>This 6-minute video demonstrates how to setup a new machine for N3 smart contract development.</p></div><ul><li><strong>C# Visual Studio Code extension</strong> — <a href="https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp">https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp</a><br/>This will add support to VS Code for editing and building C# source code.</li><li><strong>Neo C# smart contract compiler</strong> — <a href="https://github.com/neo-project/neo-devpack-dotnet">https://github.com/neo-project/neo-devpack-dotnet</a><br/>This tool allows you to convert compiled C# code into bytecode suitable for execution by the Neo virtual machine.</li></ul><div style="margin-left:15%;margin-right:15%;border:1px solid #000;border-radius:15px;padding-left:15px;padding-right:15px;background-color:#f5f5f5;font-style:italic;font-size:0.8em"><p>For a step-by-step walkthrough showing how to install the C# VS Code extension and the Neo C# compiler, see: <a href="./quickstart4.html">Quick Start video 4</a>.</p><p>This 11-minute video demonstrates how to setup your machine to compile C# smart contracts and walks through a trivial example.</p></div><ul><li><strong>Neo Express</strong> — <a href="https://github.com/neo-project/neo-express">https://github.com/neo-project/neo-express</a><br/>This tool allows you to run a private instance of the Neo blockchain.</li></ul><div style="margin-left:15%;margin-right:15%;border:1px solid #000;border-radius:15px;padding-left:15px;padding-right:15px;background-color:#f5f5f5;font-style:italic;font-size:0.8em"><p>Neo Express can be installed using the following command:<br/><code>$ dotnet tool install Neo.Express -g</code></p><p> The .NET SDK must be installed first (see above).</p><p>On Linux and MacOS systems additional dependencies are required, see <a href="./quickstart1.html">Quick Start video 1</a> or the <a href="https://github.com/neo-project/neo-express#ubuntu-installation">Neo Express documentation</a> for more information.</p></div><p>All of the software listed above is freely available and cross-platform (you can follow along on Windows, Mac or Linux).</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Create a private blockchain</h2><p>First, we’ll create a new empty folder—registrar—for our project. We’ll store all files related to our domain registration service in this folder.</p><pre>$ mkdir registrar
 $ cd registrar</pre><p>The first thing we will do is use Neo Express to create a private blockchain. This will allow us to deploy and invoke our contract while we are developing it without spending any real GAS.</p><pre>$ neoxp create
 Created 1 node privatenet at
 /Users/neo/registrar/default.neo-express
@@ -29,9 +29,10 @@ Time Elapsed 00:00:01.21</pre><p>Let’s remove the sample code and fill out som
 using System.ComponentModel;
 using System.Numerics;
 
+using Neo;
 using Neo.SmartContract.Framework;
-using Neo.SmartContract.Framework.Services.Neo;
-using Neo.SmartContract.Framework.Services.System;
+using Neo.SmartContract.Framework.Native;
+using Neo.SmartContract.Framework.Services;
 
 namespace Registration
 {
@@ -58,20 +59,20 @@ namespace Registration
         throw new Exception(&quot;Domains must be non-empty&quot;);
     }
 }
-</pre><p>We’ll often need to know the current owner of a valid domain name, so let’s also add a helper method for that. We’ll use contract storage to keep track of which domain is owned by which address and will arrange for the method to return zero if a domain is unregistered.</p><pre>static Neo.UInt160 GetOwner(string domain)
+</pre><p>We’ll often need to know the current owner of a valid domain name, so let’s also add a helper method for that. We’ll use contract storage to keep track of which domain is owned by which address and will arrange for the method to return zero if a domain is unregistered.</p><pre>static UInt160 GetOwner(string domain)
 {
     var value = Storage.Get(Storage.CurrentContext, domain);
     if (value == null)
     {
-        return Neo.UInt160.Zero;
+        return UInt160.Zero;
     }
     else
     {
-        return (Neo.UInt160) value;
+        return (UInt160) value;
     }
 }</pre><p>We also need to declare the event that we will be emitting whenever domain name ownership changes:</p><pre>[DisplayName(&quot;ChangeOwner&quot;)]
-public static event Action&lt;string, Neo.UInt160&gt; OnChangeOwner;
-</pre><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Domain name lookup</h2><p>Our first operation will allow people to lookup the current owner of a domain name (a return value of zero will represent that the domain is currently unregistered):</p><pre>public static Neo.UInt160 Lookup(string domain)
+public static event Action&lt;string, UInt160&gt; OnChangeOwner;
+</pre><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Domain name lookup</h2><p>Our first operation will allow people to lookup the current owner of a domain name (a return value of zero will represent that the domain is currently unregistered):</p><pre>public static UInt160 Lookup(string domain)
 {
     Validate (domain);
     return GetOwner(domain);
@@ -84,10 +85,10 @@ public static event Action&lt;string, Neo.UInt160&gt; OnChangeOwner;
         throw new Exception(&quot;Already registered&quot;);
     }
 
-    var tx = (Transaction) ExecutionEngine.ScriptContainer;
+    var tx = (Transaction) Runtime.ScriptContainer;
     Storage.Put(Storage.CurrentContext, domain, tx.Sender);
     OnChangeOwner(domain, tx.Sender);
-}</pre><p>Note that we first check that the domain is valid and available. We then extract the address used to sign the transaction and update the contract storage so the mapping from this domain name to this address is persisted.</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Domain name transfer</h2><p>Now we need an operation for transferring domain names:</p><pre>public static void Transfer(string domain, Neo.UInt160 to)
+}</pre><p>Note that we first check that the domain is valid and available. We then extract the address used to sign the transaction and update the contract storage so the mapping from this domain name to this address is persisted.</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Domain name transfer</h2><p>Now we need an operation for transferring domain names:</p><pre>public static void Transfer(string domain, UInt160 to)
 {
     Validate(domain);
 
@@ -125,7 +126,7 @@ public static event Action&lt;string, Neo.UInt160&gt; OnChangeOwner;
     }
 
     Storage.Delete(Storage.CurrentContext, domain);
-    OnChangeOwner(domain, Neo.UInt160.Zero);
+    OnChangeOwner(domain, UInt160.Zero);
 }</pre><p>We check that the domain is currently registered and the person it is registered to has signed the transaction; we then remove the relevant item from storage and emit our ownership change event (using an address of zero to signify that the domain has become available again).</p><p>Now we’re ready to deploy our contract to our private Neo blockchain!</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Contract deployment</h2><p>When you build your smart contract code, one of the files emitted is<code>RegistrationContract.nef</code>; this contains the N3 Virtual Machine bytecode for your contract and is required for deployment. You can deploy your contract to your private blockchain as follows:</p><pre>$ neoxp contract deploy Registration/bin/Debug/net5.0/RegistrationContract.nef owner
 Deployment Transaction 0xc5f6b16350427e4bf0dfa01fc939ac192df45e39e703e60cd08db5c1a37e17a5 submitted</pre><p>Your contract has now been deployed to your own private Neo blockchain. Next, we’ll experiment with registering some domains…</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Registering a domain</h2><p>Neo Express allows you to invoke any contract deployed to your private blockchain. To do so, you must provide an “<a href="https://github.com/ngdenterprise/design-notes/blob/master/NDX-DN12%20-%20Neo%20Express%20Invoke%20Files.md">invoke file</a>”; an invoke file is a JSON file that specifies one or more contract methods that should be invoked.</p><p>Create a new text file and paste the following JSON into it:</p><pre>[
   {
@@ -146,11 +147,13 @@ Invocation Transaction 0xdbf3fa71a74fa0676d7513ded2e2f18ea6cf5b9f022a9b008b9b05b
     &quot;operation&quot;: &quot;delete&quot;,
     &quot;args&quot;: [ &quot;widgets&quot; ]
   }
-]</pre><p>Now run this invoke file the same was as before, but this time use Bob’s account to submit the transaction. Now nobody own’s the domain<code>widgets</code> and it is available for registration again!</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Exercise for the reader</h2><p>Our contract allows anyone to register any domain free-of-charge (as long as they have enough GAS to pay to submit the invocation transactions). In a real-world you may want to charge fees when a user registers a domain; people could pay these fees in NEO, GAS or indeed any other NEP-17 asset.</p><p>As an exercise, you can modify the <code>RegistrationContract</code> to support this functionality: You can add an <code>OnPayment</code> method to your contract that will be called whenever someone pays assets to the contract. The <code>OnPayment</code> method provides the sender and amount of funds as arguments, you can determine what asset was paid by inspecting the <code>ExecutionEngine.CallingScriptHash</code> property provided by the runtime and you could make use of the optional <code>data</code> argument to allow the user to specify which name they would like to register. Within your <code>OnPayment</code> method you can reject the transaction—e.g., if the domain is unavailable or not enough funds were paid—by throwing an exception.</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Source code listing</h2><p>Here is the complete smart contract source code:</p><pre>using System;
+]</pre><p>Now run this invoke file the same was as before, but this time use Bob’s account to submit the transaction. Now nobody own’s the domain<code>widgets</code> and it is available for registration again!</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Exercise for the reader</h2><p>Our contract allows anyone to register any domain free-of-charge (as long as they have enough GAS to pay to submit the invocation transactions). In a real-world you may want to charge fees when a user registers a domain; people could pay these fees in NEO, GAS or indeed any other NEP-17 asset.</p><p>As an exercise, you can modify the <code>RegistrationContract</code> to support this functionality: You can add an <code>OnPayment</code> method to your contract that will be called whenever someone pays assets to the contract. The <code>OnPayment</code> method provides the sender and amount of funds as arguments, you can determine what asset was paid by inspecting the <code>Runtime.CallingScriptHash</code> property provided by the runtime and you could make use of the optional <code>data</code> argument to allow the user to specify which name they would like to register. Within your <code>OnPayment</code> method you can reject the transaction—e.g., if the domain is unavailable or not enough funds were paid—by throwing an exception.</p><h2 style="font-size:1.5rem;margin-bottom:20px;margin-top:40px;text-align:left">Source code listing</h2><p>Here is the complete smart contract source code:</p><pre>using System;
 using System.ComponentModel;
+
+using Neo;
 using Neo.SmartContract.Framework;
-using Neo.SmartContract.Framework.Services.Neo;
-using Neo.SmartContract.Framework.Services.System;
+using Neo.SmartContract.Framework.Native;
+using Neo.SmartContract.Framework.Services;
 
 namespace Registration
 {
@@ -161,7 +164,7 @@ namespace Registration
     public class RegistrationContract : SmartContract
     {
         [DisplayName(&quot;ChangeOwner&quot;)]
-        public static event Action&lt;string, Neo.UInt160&gt; OnChangeOwner;
+        public static event Action&lt;string, UInt160&gt; OnChangeOwner;
 
         static void Validate(string domain)
         {
@@ -180,20 +183,20 @@ namespace Registration
             }
         }
 
-        static Neo.UInt160 GetOwner(string domain)
+        static UInt160 GetOwner(string domain)
         {
             var value = Storage.Get(Storage.CurrentContext, domain);
             if (value == null)
             {
-                return Neo.UInt160.Zero;
+                return UInt160.Zero;
             }
             else
             {
-                return (Neo.UInt160) value;
+                return (UInt160) value;
             }
         }
 
-        public static Neo.UInt160 Lookup(string domain)
+        public static UInt160 Lookup(string domain)
         {
             Validate (domain);
             return GetOwner(domain);
@@ -208,12 +211,12 @@ namespace Registration
                 throw new Exception(&quot;Already registered&quot;);
             }
 
-            var tx = (Transaction) ExecutionEngine.ScriptContainer;
+            var tx = (Transaction) Runtime.ScriptContainer;
             Storage.Put(Storage.CurrentContext, domain, tx.Sender);
             OnChangeOwner(domain, tx.Sender);
         }
 
-        public static void Transfer(string domain, Neo.UInt160 to)
+        public static void Transfer(string domain, UInt160 to)
         {
             Validate (domain);
 
@@ -253,7 +256,7 @@ namespace Registration
             }
 
             Storage.Delete(Storage.CurrentContext, domain);
-            OnChangeOwner(domain, Neo.UInt160.Zero);
+            OnChangeOwner(domain, UInt160.Zero);
         }
     }
 }</pre></div></div></body></html>
