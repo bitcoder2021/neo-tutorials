@@ -6,7 +6,12 @@ import TutorialPreReqs from "../../components/TutorialPreReqs";
 
 const _: Tutorial = {
   number: 1,
-  title: "Real-world Smart Contracts: Building and deploying a Simple Domain Registrar",
+  title:
+    "Real-world Smart Contracts: Building and deploying a Simple Domain Registrar",
+  basedOn: {
+    name: "Neo N3 Fungible Token Sample Contract",
+    url: "https://github.com/ngdenterprise/neo-fungible-token-sample",
+  },
   content: [
     {
       segment: (
@@ -551,9 +556,10 @@ Time Elapsed 00:00:01.21`}
 using System.ComponentModel;
 using System.Numerics;
 
+using Neo;
 using Neo.SmartContract.Framework;
-using Neo.SmartContract.Framework.Services.Neo;
-using Neo.SmartContract.Framework.Services.System;
+using Neo.SmartContract.Framework.Native;
+using Neo.SmartContract.Framework.Services;
 
 namespace Registration
 {
@@ -641,16 +647,16 @@ namespace Registration
             will arrange for the method to return zero if a domain is
             unregistered.
           </p>
-          <pre>{`static Neo.UInt160 GetOwner(string domain)
+          <pre>{`static UInt160 GetOwner(string domain)
 {
     var value = Storage.Get(Storage.CurrentContext, domain);
     if (value == null)
     {
-        return Neo.UInt160.Zero;
+        return UInt160.Zero;
     }
     else
     {
-        return (Neo.UInt160) value;
+        return (UInt160) value;
     }
 }`}</pre>
           <p>
@@ -658,7 +664,7 @@ namespace Registration
             domain name ownership changes:
           </p>
           <pre>{`[DisplayName("ChangeOwner")]
-public static event Action<string, Neo.UInt160> OnChangeOwner;
+public static event Action<string, UInt160> OnChangeOwner;
 `}</pre>
           <H2>Domain name lookup</H2>
           <p>
@@ -666,7 +672,7 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
             a domain name (a return value of zero will represent that the domain
             is currently unregistered):
           </p>
-          <pre>{`public static Neo.UInt160 Lookup(string domain)
+          <pre>{`public static UInt160 Lookup(string domain)
 {
     Validate (domain);
     return GetOwner(domain);
@@ -690,7 +696,7 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
         throw new Exception("Already registered");
     }
 
-    var tx = (Transaction) ExecutionEngine.ScriptContainer;
+    var tx = (Transaction) Runtime.ScriptContainer;
     Storage.Put(Storage.CurrentContext, domain, tx.Sender);
     OnChangeOwner(domain, tx.Sender);
 }`}</pre>
@@ -702,7 +708,7 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
           </p>
           <H2>Domain name transfer</H2>
           <p>Now we need an operation for transferring domain names:</p>
-          <pre>{`public static void Transfer(string domain, Neo.UInt160 to)
+          <pre>{`public static void Transfer(string domain, UInt160 to)
 {
     Validate(domain);
 
@@ -753,7 +759,7 @@ public static event Action<string, Neo.UInt160> OnChangeOwner;
     }
 
     Storage.Delete(Storage.CurrentContext, domain);
-    OnChangeOwner(domain, Neo.UInt160.Zero);
+    OnChangeOwner(domain, UInt160.Zero);
 }`}</pre>
           <p>
             We check that the domain is currently registered and the person it
@@ -1090,8 +1096,8 @@ Invocation Transaction 0xdbf3fa71a74fa0676d7513ded2e2f18ea6cf5b9f022a9b008b9b05b
             assets to the contract. The <code>OnPayment</code> method provides
             the sender and amount of funds as arguments, you can determine what
             asset was paid by inspecting the{" "}
-            <code>ExecutionEngine.CallingScriptHash</code> property provided by
-            the runtime and you could make use of the optional <code>data</code>{" "}
+            <code>Runtime.CallingScriptHash</code> property provided by the
+            runtime and you could make use of the optional <code>data</code>{" "}
             argument to allow the user to specify which name they would like to
             register. Within your <code>OnPayment</code> method you can reject
             the transaction—e.g., if the domain is unavailable or not enough
@@ -1101,9 +1107,11 @@ Invocation Transaction 0xdbf3fa71a74fa0676d7513ded2e2f18ea6cf5b9f022a9b008b9b05b
           <p>Here is the complete smart contract source code:</p>
           <pre>{`using System;
 using System.ComponentModel;
+
+using Neo;
 using Neo.SmartContract.Framework;
-using Neo.SmartContract.Framework.Services.Neo;
-using Neo.SmartContract.Framework.Services.System;
+using Neo.SmartContract.Framework.Native;
+using Neo.SmartContract.Framework.Services;
 
 namespace Registration
 {
@@ -1114,7 +1122,7 @@ namespace Registration
     public class RegistrationContract : SmartContract
     {
         [DisplayName("ChangeOwner")]
-        public static event Action<string, Neo.UInt160> OnChangeOwner;
+        public static event Action<string, UInt160> OnChangeOwner;
 
         static void Validate(string domain)
         {
@@ -1133,20 +1141,20 @@ namespace Registration
             }
         }
 
-        static Neo.UInt160 GetOwner(string domain)
+        static UInt160 GetOwner(string domain)
         {
             var value = Storage.Get(Storage.CurrentContext, domain);
             if (value == null)
             {
-                return Neo.UInt160.Zero;
+                return UInt160.Zero;
             }
             else
             {
-                return (Neo.UInt160) value;
+                return (UInt160) value;
             }
         }
 
-        public static Neo.UInt160 Lookup(string domain)
+        public static UInt160 Lookup(string domain)
         {
             Validate (domain);
             return GetOwner(domain);
@@ -1161,12 +1169,12 @@ namespace Registration
                 throw new Exception("Already registered");
             }
 
-            var tx = (Transaction) ExecutionEngine.ScriptContainer;
+            var tx = (Transaction) Runtime.ScriptContainer;
             Storage.Put(Storage.CurrentContext, domain, tx.Sender);
             OnChangeOwner(domain, tx.Sender);
         }
 
-        public static void Transfer(string domain, Neo.UInt160 to)
+        public static void Transfer(string domain, UInt160 to)
         {
             Validate (domain);
 
@@ -1206,7 +1214,7 @@ namespace Registration
             }
 
             Storage.Delete(Storage.CurrentContext, domain);
-            OnChangeOwner(domain, Neo.UInt160.Zero);
+            OnChangeOwner(domain, UInt160.Zero);
         }
     }
 }`}</pre>

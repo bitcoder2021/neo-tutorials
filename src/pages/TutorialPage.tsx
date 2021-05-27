@@ -33,6 +33,10 @@ export default function TutorialPage({ tutorial, mode }: Props) {
           .
         </p>
       )}
+      <p>
+        This tutorial was inspired by the{" "}
+        <a href={tutorial.basedOn.url}>{tutorial.basedOn.name}</a> project.
+      </p>
       <div
         style={{
           backgroundColor: "#fff",

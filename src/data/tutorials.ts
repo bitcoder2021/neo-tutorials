@@ -5,6 +5,7 @@ type Tutorial = {
   number: number;
   title: string;
   content: { onlyRelevantFor?: "ui" | "cmd"; segment: JSX.Element }[];
+  basedOn: { name: string; url: string };
 };
 
 const tutorials: Tutorial[] = [registrar, nep17];
